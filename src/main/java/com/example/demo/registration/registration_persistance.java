@@ -15,7 +15,7 @@ import com.example.demo.configuration.DbConfig;
 
 
 @Repository
-public class registration_persistance {
+public class registration_persistance implements IRegisterPersistance {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private Statement statement;
@@ -53,6 +53,7 @@ public class registration_persistance {
     }
 
 
+    @Override
     public void save(registration_body obj) {
         try {
             this.getConnection();

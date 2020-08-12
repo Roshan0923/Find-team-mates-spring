@@ -12,7 +12,7 @@ public class Service_registration {
 	
 
 		@Autowired
-		registration_persistance obj;
+		IRegisterPersistance obj;
 
 
 
