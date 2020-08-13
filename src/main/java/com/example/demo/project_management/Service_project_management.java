@@ -23,5 +23,17 @@ public class Service_project_management {
 		System.out.println("Calling the service methos to get all user created project");
 		return persistance_obj.find_project_by_user_id(user_id);
 	}
+	
+	public void deleteUsereSelectedProject(int user_id,int project_id)
+	{
+		System.out.println("Inside the service class delete method");
+		persistance_obj.deleteProject(user_id, project_id);
+	}
+	
+	public void updateProject(project_body obj,int project_id)
+	{
+		System.out.println("Calling the service class update project method");
+		persistance_obj.updateProjectDetails(obj,project_id);
+	}
 
 }

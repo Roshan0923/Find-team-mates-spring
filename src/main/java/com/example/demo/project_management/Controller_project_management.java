@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +29,26 @@ public class Controller_project_management {
 		service.create_new_project(obj);
 	}
 	@GetMapping ("/getUSerCreatedProject/{user_id}")
-	public List<project_body> getUSerWrittenProject(@PathVariable Integer user_id)
+	public List<project_body> getUSerWrittenProject(@PathVariable int user_id)
 	{
+		// int teamp_user_id=Integer.parseInt(user_id);
 		System.out.println("user id-->"+user_id);
 		System.out.println("Inside the controller method to get project data by USER_ID");
-		return service.get_user_created_project(user_id);
-		
-		
+		return service.get_user_created_project(user_id);	
+	}
+	
+	@DeleteMapping ("/deleteProject/{user_id}/{project_id}")
+	public void deleteProject(@PathVariable int user_id,@PathVariable int project_id)
+	{
+		System.out.println("Inside Controller method to delete project with project id-->"+project_id);
+		service.deleteUsereSelectedProject(user_id, project_id);
+	}
+	
+	@PutMapping("/updateProject/{project_id}")
+	public void updateProject(@PathVariable int project_id,@RequestBody project_body obj)
+	{
+		System.out.println("Inside Controller method to update project with project id-->"+project_id);
+		service.updateProject(obj, project_id);
 	}
 
 }
