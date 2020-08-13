@@ -13,6 +13,13 @@ Timestamp deadline;
 	 String back_end;
 	 String type;
 	 int user_id;
+	 int project_id;
+	public int getProject_id() {
+		return project_id;
+	}
+	public void setProject_id(int project_id) {
+		this.project_id = project_id;
+	}
 	public Timestamp getDeadline() {
 		return deadline;
 	}
