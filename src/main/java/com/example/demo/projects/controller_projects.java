@@ -31,6 +31,7 @@ public class controller_projects {
 	@GetMapping("/getUserInfo/{user_id}")
 	public user_info_dao getUSerInfo(@PathVariable int user_id)
 	{
+		System.out.println("Inside the get user infor method");
 		return service.getUserINfo(user_id);
 	}
 	

@@ -9,7 +9,7 @@ public interface IPeoject_management_persistance {
 	public void deleteProject(int user_id,int project_id);
 	
 	public void updateProjectDetails(project_body obj,int project_id);
-	
+	public List<invitation_dao> getPendingInvitation(int user_id);
 	
 
 }

@@ -35,5 +35,12 @@ public class Service_project_management {
 		System.out.println("Calling the service class update project method");
 		persistance_obj.updateProjectDetails(obj,project_id);
 	}
+	
+	public List<invitation_dao> getPendingInvitation(int user_id)
+	{
+
+		System.out.println("Calling the service class to get the pending list ");
+		return persistance_obj.getPendingInvitation(user_id);
+	}
 
 }

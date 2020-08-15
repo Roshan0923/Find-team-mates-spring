@@ -15,6 +15,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.configuration.DbConfig;
+import com.example.demo.projects.project_dao;
 
 @Repository
 public class project_persistance implements IPeoject_management_persistance {
@@ -26,7 +27,8 @@ public class project_persistance implements IPeoject_management_persistance {
 	public static final String FIND_BY_USER = "SELECT project_id,deadline,project_name,project_description,team_mate_desctiption,front_end,back_end,type FROM projects where user_id=?";
     public static final String DELETE = "DELETE FROM projects WHERE user_id = ? and project_id=?";
     private static final String UPDATE = "UPDATE projects SET deadline=?,project_name=?,project_description=?,team_mate_desctiption=?,front_end=?,back_end=?,type=? WHERE user_id = ? and project_id=?";
-
+    private static final String GET_PENDING_INVITATION ="select p.project_name, p.project_id, u.request_user_id,u.message, a.name,a.email_id from projects as p, user_request as u, registered_user as a where p.project_id = u.project_id AND u.user_id = ? AND a.id = u.request_user_id AND u.isAdded=0"; 
+ 
 	public void getPreparedStatement(String query) throws SQLException {
 		this.preparedStatement = this.connection.prepareStatement(query);
 	}
@@ -160,6 +162,38 @@ public class project_persistance implements IPeoject_management_persistance {
 	            this.closePreparedStatement();
 	            this.cleanConnection();
 	        }
+		
+	}
+
+	@Override
+	public List<invitation_dao> getPendingInvitation(int user_id) {
+		System.out.println("Inside the persistance class method to get all the Pending Invitation");
+		try {
+			this.getConnection();
+			
+	
+		    
+			this.getPreparedStatement(GET_PENDING_INVITATION);
+			this.preparedStatement.setInt(1, user_id);
+			ResultSet resultSet = this.preparedStatement.executeQuery();
+			List<invitation_dao> blogpost = new ArrayList<invitation_dao>();
+			while (resultSet.next()) {
+				invitation_dao obj = new invitation_dao();
+				obj.setProject_name(resultSet.getString(1));
+				obj.setProject_id(resultSet.getInt(2));
+				obj.setRequested_user_id(resultSet.getInt(3));
+				obj.setMessage(resultSet.getString(4));
+				obj.setRequested_user_name(resultSet.getString(5));
+				obj.setRequest_user_email(resultSet.getString(6));
+				blogpost.add(obj);
+			}
+			return blogpost;
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+		
 		
 	}
 	

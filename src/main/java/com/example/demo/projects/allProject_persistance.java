@@ -25,10 +25,10 @@ public class allProject_persistance implements Iproject_persistance {
 	private Connection connection;
 	private PreparedStatement preparedStatement;
 	private Statement statement;
-	 public static final String GET_ALL = "Select * FROM projects";
+	 public static final String GET_ALL = "Select project_id,deadline,project_name,project_description,team_mate_desctiption,front_end,back_end,type,user_id FROM projects";
 	 public static final String GET_USER_INFO = "Select name,email_id,linked_in_url,description,language,technology,pic_byte FROM registered_user WHERE id= ?";
 	    public static final String INSERT = "INSERT INTO user_request (project_id,user_id,request_user_id,message) VALUES (?,?,?,?)";
-
+	    public static final String GET_SPECIFIC_PROJECT = "Select project_id,deadline,project_name,project_description,team_mate_desctiption,front_end,back_end,type,user_id FROM projects";
 	 
 		public void getPreparedStatement(String query) throws SQLException {
 			this.preparedStatement = this.connection.prepareStatement(query);
@@ -66,6 +66,7 @@ public class allProject_persistance implements Iproject_persistance {
 		System.out.println("Inside the persistance class method to get all the project");
 		try {
 			this.getConnection();
+			
 			this.getPreparedStatement(GET_ALL);
 			ResultSet resultSet = this.preparedStatement.executeQuery();
 			List<project_dao> blogpost = new ArrayList<project_dao>();
@@ -79,7 +80,7 @@ public class allProject_persistance implements Iproject_persistance {
 				obj.setFront_end(resultSet.getString(6));
 				obj.setBack_end(resultSet.getString(7));
 				obj.setType(resultSet.getString(8));
-
+				obj.setUser_id(resultSet.getInt(9));
 				blogpost.add(obj);
 			}
 			return blogpost;

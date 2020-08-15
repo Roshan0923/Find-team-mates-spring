@@ -50,5 +50,14 @@ public class Controller_project_management {
 		System.out.println("Inside Controller method to update project with project id-->"+project_id);
 		service.updateProject(obj, project_id);
 	}
+	
+	
+	@GetMapping("/getInvitation/{user_id}")
+	public List<invitation_dao> getPendingInvitation(@PathVariable int user_id)
+	{
+		System.out.println("Inside the controller to get the pending invitation for the user-->"+user_id);
+		return service.getPendingInvitation(user_id);
+		
+	}
 
 }
