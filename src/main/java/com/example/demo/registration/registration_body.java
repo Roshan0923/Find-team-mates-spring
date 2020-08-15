@@ -14,7 +14,14 @@ public class registration_body {
 	 String description;
 	 String technology;
 	 String language;
-	  private MultipartFile pic_byte;
+	 int user_id;
+	  public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	private MultipartFile pic_byte;
 	// byte[] pic_byte;
 	 
 	  private Timestamp createdAt;

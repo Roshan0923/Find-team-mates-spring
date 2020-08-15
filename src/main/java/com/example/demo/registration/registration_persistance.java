@@ -19,7 +19,7 @@ public class registration_persistance implements IRegisterPersistance {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private Statement statement;
-    public static final String INSERT = "INSERT INTO registered_user (name,email_id,password,linked_in_url,description,language,technology,pic_byte) VALUES (?,?,?,?,?,?,?,?)";
+    public static final String INSERT = "INSERT INTO registered_user (name,email_id,password,linked_in_url,description,language,technology,pic_byte,id) VALUES (?,?,?,?,?,?,?,?,?)";
 
 
     public void getPreparedStatement(String query) throws SQLException {
@@ -66,6 +66,8 @@ public class registration_persistance implements IRegisterPersistance {
             this.preparedStatement.setString(6, obj.getLanguage());
             this.preparedStatement.setString(7, obj.getTechnology());
             this.preparedStatement.setBlob(8, new SerialBlob( obj.getPic_byte().getBytes()));
+            this.preparedStatement.setInt(9, obj.getUser_id());
+
             int result = this.preparedStatement.executeUpdate();
             if (result == 1) {
 //                this.statement = this.connection.createStatement();
