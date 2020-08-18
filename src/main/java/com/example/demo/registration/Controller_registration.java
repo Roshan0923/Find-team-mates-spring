@@ -17,15 +17,7 @@ public class Controller_registration {
 	@Autowired
 	Service_registration serivceRegistration;
 	
-	
-	
-	@GetMapping ("/")
-	public String hello()
-	{
-		System.out.println("hello");
-		return "helloo";
-	}
-	
+
 	@PostMapping("/register")
 	public boolean register_user(@ModelAttribute registration_body obj)
 	{
