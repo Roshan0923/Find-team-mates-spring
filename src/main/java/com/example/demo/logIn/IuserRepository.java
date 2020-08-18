@@ -11,5 +11,8 @@ public interface IuserRepository  extends JpaRepository<User,Integer>{
 	
 	@Query(value = "SELECT name,email_id,password,id FROM `registered_user` WHERE email_id=:email_id",nativeQuery = true)
 	User FindByEmailID( @Param("email_id") String email_id);
+	
+	@Query(value = "SELECT id FROM `registered_user` WHERE email_id=:email_id",nativeQuery = true)
+	int GetID( @Param("email_id") String email_id);
 
 }

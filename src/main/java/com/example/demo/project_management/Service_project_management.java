@@ -12,10 +12,10 @@ public class Service_project_management {
 	@Autowired
 	project_persistance persistance_obj;
 	
-	public void create_new_project(project_body obj)
+	public boolean create_new_project(project_body obj)
 	{
 		System.out.println("Calling the service class methos to create new object");
-		persistance_obj.save(obj);
+		return persistance_obj.save(obj);
 	}
 	
 	public List<project_body> get_user_created_project(int user_id)
@@ -33,6 +33,7 @@ public class Service_project_management {
 	public void updateProject(project_body obj,int project_id)
 	{
 		System.out.println("Calling the service class update project method");
+		System.out.println("Service method project id is "+project_id);
 		persistance_obj.updateProjectDetails(obj,project_id);
 	}
 	

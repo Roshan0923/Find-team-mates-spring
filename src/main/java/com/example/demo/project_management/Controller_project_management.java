@@ -4,6 +4,8 @@ import java.security.PublicKey;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +25,16 @@ public class Controller_project_management {
 	Service_project_management service;
 	
 	@PostMapping("/create")
-	public void create_projec(@RequestBody project_body obj)
+	public ResponseEntity<String> create_projec(@RequestBody project_body obj)
 	{
 		System.out.println("Inside the controller method to create new  project");
-		service.create_new_project(obj);
+		if(service.create_new_project(obj)) {
+			return new ResponseEntity<>("Successfully created new project", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 	@GetMapping ("/getUSerCreatedProject/{user_id}")
 	public List<project_body> getUSerWrittenProject(@PathVariable int user_id)
@@ -47,6 +55,12 @@ public class Controller_project_management {
 	@PutMapping("/updateProject/{project_id}")
 	public void updateProject(@PathVariable int project_id,@RequestBody project_body obj)
 	{
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("user id id"+obj.getUser_id());
+		System.out.println("Project id is"+project_id);
+		System.out.println(obj.getBack_end());
+		System.out.println(obj.getFront_end());
+		
 		System.out.println("Inside Controller method to update project with project id-->"+project_id);
 		service.updateProject(obj, project_id);
 	}

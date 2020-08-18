@@ -61,7 +61,7 @@ public class project_persistance implements IPeoject_management_persistance {
 	}
 
 	@Override
-	public void save(project_body obj) {
+	public boolean save(project_body obj) {
 		System.out.println("Inside the persistance class method to create new project");
 		try {
 			this.getConnection();
@@ -75,11 +75,12 @@ public class project_persistance implements IPeoject_management_persistance {
 			this.preparedStatement.setString(7, obj.getType());
 			this.preparedStatement.setInt(8, obj.getUser_id());
 			int result = this.preparedStatement.executeUpdate();
+			
+			return true;
 
 		} catch (SQLException e) {
 			System.out.println("Error while stroing the data");
-			// log.error("Error executing insert query on Blog table: {}", e.getMessage());
-			// return null;
+			return false;
 		} finally {
 			this.closePreparedStatement();
 			this.cleanConnection();
@@ -107,7 +108,7 @@ public class project_persistance implements IPeoject_management_persistance {
 				obj.setFront_end(resultSet.getString(6));
 				obj.setBack_end(resultSet.getString(7));
 				obj.setType(resultSet.getString(8));
-
+				obj.setUser_id(user_id);
 				blogpost.add(obj);
 			}
 			return blogpost;
@@ -143,6 +144,9 @@ public class project_persistance implements IPeoject_management_persistance {
 	@Override
 	public void updateProjectDetails(project_body obj,int project_id) {
 		 try {
+			 System.out.println("Inside the persistance class method to update the project information");
+			 System.out.println("User id id"+obj.getUser_id());
+			 System.out.println("Project ID is"+project_id);
 	            this.getConnection();
 	            this.getPreparedStatement(UPDATE);
 	        	this.preparedStatement.setTimestamp(1, obj.getDeadline());
@@ -156,7 +160,8 @@ public class project_persistance implements IPeoject_management_persistance {
 				this.preparedStatement.setInt(9, project_id);
 	            int result = this.preparedStatement.executeUpdate();
 	            
-	        } catch (SQLException e) {
+	        } catch ( Exception e) {
+	        	System.out.println(e);
 	          
 	        } finally {
 	            this.closePreparedStatement();

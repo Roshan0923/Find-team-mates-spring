@@ -1,6 +1,8 @@
 package com.example.demo.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,15 +21,24 @@ public class Controller_registration {
 	
 
 	@PostMapping("/register")
-	public boolean register_user(@ModelAttribute registration_body obj)
+	public ResponseEntity<String> register_user(@ModelAttribute registration_body obj)
 	{
 		System.out.println(obj.getEmail());
 		System.out.println(obj.getPassword());
 		System.out.println(obj.getPic_byte().getSize());
-	//	System.out.println(obj.email);
+	if(serivceRegistration.checkUserExist(obj))
+	{
+		System.out.println(serivceRegistration.checkUserExist(obj));
+		return new ResponseEntity<>("user already exist", HttpStatus.CONFLICT);
+	}
+	else {
 		serivceRegistration.doRegistration(obj);
-		return true;
+		return new ResponseEntity<>("Successfull Registered", HttpStatus.OK);
+	}
+	
+	}
+		
 	}
 	
 
-}
+

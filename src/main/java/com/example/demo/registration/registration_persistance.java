@@ -20,7 +20,7 @@ public class registration_persistance implements IRegisterPersistance {
     private PreparedStatement preparedStatement;
     private Statement statement;
     public static final String INSERT = "INSERT INTO registered_user (name,email_id,password,linked_in_url,description,language,technology,pic_byte,id) VALUES (?,?,?,?,?,?,?,?,?)";
-
+    public static final String IS_EXI_STRING ="Select COUNT(*) from registered_user where email_id=?";
 
     public void getPreparedStatement(String query) throws SQLException {
         this.preparedStatement = this.connection.prepareStatement(query);
@@ -70,12 +70,7 @@ public class registration_persistance implements IRegisterPersistance {
 
             int result = this.preparedStatement.executeUpdate();
             if (result == 1) {
-//                this.statement = this.connection.createStatement();
-//                ResultSet rs = this.statement.executeQuery("SELECT LAST_INSERT_ID()");
-//                if (rs.next()) {
-//                    Long id = rs.getLong(1);
-//                    return findById(id);
-//                }
+
             }
             
         } catch (SQLException | IOException e) {
@@ -87,4 +82,38 @@ public class registration_persistance implements IRegisterPersistance {
             this.cleanConnection();
         }
     }
+
+	@Override
+	public boolean isUserExist(registration_body obj) {
+		System.out.println("Inside isuser exist cmethod");
+		try {
+			this.getConnection();
+	         this.getPreparedStatement(IS_EXI_STRING);
+	         this.preparedStatement.setString(1, obj.getEmail());
+	         ResultSet result = this.preparedStatement.executeQuery();
+	         int rowCount=0;
+	         if(result!=null)
+	         {
+	        	 while(result.next()) {
+	        		    rowCount = Integer.parseInt(result.getString("count(*)"));
+	        		  //  System.out.println(Integer.parseInt(result.getString("count(*)")));
+	        		}
+	        	 
+	        	 if(rowCount==0)
+	        	 {
+	        		 return false;
+	        	 }
+	        	 else {
+					return true;
+				}
+	         }
+	         else {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return true;
+	}
 }

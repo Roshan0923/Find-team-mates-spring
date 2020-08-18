@@ -6,6 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "registered_user")
+
 public class User {
 	
 	
