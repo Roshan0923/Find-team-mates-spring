@@ -21,7 +21,7 @@ public class registration_persistance implements IRegisterPersistance {
     private Statement statement;
     public static final String INSERT = "INSERT INTO registered_user (name,email_id,password,linked_in_url,description,language,technology,pic_byte,id) VALUES (?,?,?,?,?,?,?,?,?)";
     public static final String IS_EXI_STRING ="Select COUNT(*) from registered_user where email_id=?";
-
+    private static final String UPDATE = "UPDATE registered_user  SET name=?,email_id=?,linked_in_url=?,description=?,language=?,technology=?,pic_byte=? WHERE id = ? ";
     public void getPreparedStatement(String query) throws SQLException {
         this.preparedStatement = this.connection.prepareStatement(query);
     }
@@ -115,5 +115,34 @@ public class registration_persistance implements IRegisterPersistance {
 		}
 		
 		return true;
+	}
+
+	
+	
+	@Override
+	public void update(updateProfile_body obj,int user_id) {
+		 try {
+			 System.out.println("Inside the persistance class method to update the user information for user id="+user_id);
+			  
+	            this.getConnection();
+	            this.getPreparedStatement(UPDATE);
+	        	this.preparedStatement.setString(1, obj.getName());
+				this.preparedStatement.setString(2, obj.getEmail());
+				this.preparedStatement.setString(3, obj.getLinkedIn_url());
+				this.preparedStatement.setString(4, obj.getDescription());
+				this.preparedStatement.setString(5, obj.getLanguage());
+				this.preparedStatement.setString(6, obj.getTechnology());
+			    this.preparedStatement.setBlob(7, new SerialBlob( obj.getPic_byte().getBytes()));
+			    this.preparedStatement.setInt(8, user_id);
+	            int result = this.preparedStatement.executeUpdate();
+	            
+	        } catch ( Exception e) {
+	        	System.out.println(e);
+	          
+	        } finally {
+	            this.closePreparedStatement();
+	            this.cleanConnection();
+	        }
+		
 	}
 }

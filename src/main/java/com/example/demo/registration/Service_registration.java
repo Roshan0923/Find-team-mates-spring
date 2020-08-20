@@ -28,6 +28,11 @@ public class Service_registration {
 		return this.obj.isUserExist(obj);
 	}
 	
+	public void updateData(updateProfile_body obj,int user_id)
+	{
+		this.obj.update(obj,user_id);
+	}
+	
 	// compress the image bytes before storing it in the database
 	public static byte[] compressBytes(byte[] data) {
 		Deflater deflater = new Deflater();

@@ -60,7 +60,6 @@ public class Controller_project_management {
 		System.out.println("Project id is"+project_id);
 		System.out.println(obj.getBack_end());
 		System.out.println(obj.getFront_end());
-		
 		System.out.println("Inside Controller method to update project with project id-->"+project_id);
 		service.updateProject(obj, project_id);
 	}

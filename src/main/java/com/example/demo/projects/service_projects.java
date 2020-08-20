@@ -26,5 +26,9 @@ public class service_projects {
 		this.obj.insert_request(obj);
 	}
 	
+	public List<registered_user_list_dao> getList(int project_id)
+	{
+		return obj.getInfo(project_id);
+	}
 
 }

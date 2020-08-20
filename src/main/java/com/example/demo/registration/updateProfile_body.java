@@ -1,12 +1,9 @@
 package com.example.demo.registration;
 
-import java.sql.Timestamp;
-
 import org.springframework.web.multipart.MultipartFile;
 
-public class registration_body {
-	
-	
+public class updateProfile_body {
+
 	String email;
 	 String password;
 	 String name;
@@ -89,5 +86,6 @@ public class registration_body {
 	}
 
 	 
+	
 
 }

@@ -35,6 +35,14 @@ public class controller_projects {
 		return service.getUserINfo(user_id);
 	}
 	
+	@GetMapping("getRegisteredUserList/{project_id}")
+	public List<registered_user_list_dao> getRegisteredUserList(@PathVariable int project_id)
+	{
+		System.out.println("Inside the getRegisteredUserList method for project id"+project_id);
+		return service.getList(project_id);
+	}
+	
+	
 	@PostMapping("/insertRequest")
 	public boolean register_user(@RequestBody request_message_dao obj)
 	{
